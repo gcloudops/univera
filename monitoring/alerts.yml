@@ -1,0 +1,20 @@
+groups:
+  - name: univera
+    rules:
+      - alert: BackendDown
+        expr: up{job="univera-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "🚨 Backend is DOWN"
+          description: "Univera API has been down for 1 minute."
+
+      - alert: HighMemory
+        expr: process_resident_memory_bytes > 500000000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "⚠️ High memory usage"
+          description: "Backend using more than 500MB RAM."

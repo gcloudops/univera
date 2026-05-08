@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Univera University</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: white;
+    }
+
+    /* NAVBAR */
+    nav {
+      background: #1e293b;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #6366f1;
+    }
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #6366f1;
+    }
+    nav .links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 14px;
+    }
+    nav .links a:hover { color: white; }
+    nav .btn-login {
+      background: #6366f1;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #6366f1; }
+    .hero p {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 40px;
+    }
+    .hero-buttons a {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn-primary { background: #6366f1; color: white; }
+    .btn-secondary {
+      border: 2px solid #6366f1;
+      color: #6366f1;
+    }
+
+    /* STATS */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      padding: 60px 20px;
+      background: #1e293b;
+    }
+    .stat h2 { font-size: 40px; color: #6366f1; }
+    .stat p { color: #94a3b8; font-size: 14px; }
+
+    /* COURSES */
+    .courses {
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .courses h2 { font-size: 36px; margin-bottom: 40px; }
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 32px 24px;
+      width: 260px;
+      text-align: left;
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: #6366f1; }
+    .card .icon { font-size: 36px; margin-bottom: 16px; }
+    .card h3 { font-size: 18px; margin-bottom: 8px; }
+    .card p { color: #94a3b8; font-size: 13px; margin-bottom: 16px; }
+    .card .fee { color: #6366f1; font-weight: bold; }
+    .card .seats { color: #64748b; font-size: 12px; }
+    .card a {
+      display: inline-block;
+      margin-top: 16px;
+      background: #6366f1;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    /* PORTALS */
+    .portals {
+      background: #1e293b;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .portals h2 { font-size: 36px; margin-bottom: 40px; }
+    .portal-cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .portal-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 28px 20px;
+      width: 200px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .portal-card:hover {
+      border-color: #6366f1;
+      transform: translateY(-4px);
+    }
+    .portal-card .icon { font-size: 40px; margin-bottom: 12px; }
+    .portal-card h3 { font-size: 16px; margin-bottom: 6px; }
+    .portal-card p { color: #64748b; font-size: 12px; }
+
+    /* LOGIN MODAL */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal {
+      background: #1e293b;
+      border: 1px solid #6366f1;
+      border-radius: 20px;
+      padding: 40px;
+      width: 380px;
+    }
+    .modal h2 { margin-bottom: 8px; }
+    .modal p { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
+    .modal input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+    .modal input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    .modal select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+    .modal button {
+      width: 100%;
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .modal .close {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #94a3b8;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #334155;
+    }
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 14px;
+    }
+    .tab.active {
+      color: #6366f1;
+      border-bottom: 2px solid #6366f1;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0f172a;
+      border-top: 1px solid #1e293b;
+      padding: 40px;
+      text-align: center;
+      color: #475569;
+      font-size: 13px;
+    }
+    footer span { color: #6366f1; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">🎓 Univera</div>
+    <div class="links">
+      <a href="#">Courses</a>
+      <a href="#">Admissions</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+    <a href="#" class="btn-login" onclick="openModal()">Login / Register</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Welcome to <span>Univera</span><br>University</h1>
+    <p>World-class education. Apply online. Track everything in one place.</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary" onclick="openModal()">🎓 Apply Now</a>
+      <a href="#courses" class="btn-secondary">📚 View Courses</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat">
+      <h2>12,000+</h2>
+      <p>Students Enrolled</p>
+    </div>
+    <div class="stat">
+      <h2>48</h2>
+      <p>Courses Available</p>
+    </div>
+    <div class="stat">
+      <h2>95%</h2>
+      <p>Placement Rate</p>
+    </div>
+    <div class="stat">
+      <h2>25+</h2>
+      <p>Years of Excellence</p>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section class="courses" id="courses">
+    <h2>Popular Courses</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">💻</div>
+        <h3>B.Tech Computer Science</h3>
+        <p>4 years · PCM 60% required</p>
+        <div class="fee">₹75,000 / semester</div>
+        <div class="seats">🪑 120 seats available</div>
+        <a href="#" onclick="openModal()">Apply Now →</a>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>MBA Business Admin</h3>
+        <p>2 years · Graduation + CAT/MAT</p>
+        <div class="fee">₹95,000 / semester</div>
+        <div class="seats">🪑 60 seats available</div>
+        <a href="#" onclick="openModal()">Apply Now →</a>
+      </div>
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>B.Tech Electronics</h3>
+        <p>4 years · PCM 60% required</p>
+        <div class="fee">₹70,000 / semester</div>
+        <div class="seats">🪑 90 seats available</div>
+        <a href="#" onclick="openModal()">Apply Now →</a>
+      </div>
+      <div class="card">
+        <div class="icon">🔬</div>
+        <h3>M.Tech Data Science</h3>
+        <p>2 years · B.Tech + GATE score</p>
+        <div class="fee">₹85,000 / semester</div>
+        <div class="seats">🪑 30 seats available</div>
+        <a href="#" onclick="openModal()">Apply Now →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTALS -->
+  <section class="portals">
+    <h2>Access Your Portal</h2>
+    <div class="portal-cards">
+      <div class="portal-card" onclick="openModal('student')">
+        <div class="icon">🎓</div>
+        <h3>Student Portal</h3>
+        <p>Courses, fees, results</p>
+      </div>
+      <div class="portal-card" onclick="openModal('admin')">
+        <div class="icon">⚙️</div>
+        <h3>Admin Portal</h3>
+        <p>Manage admissions</p>
+      </div>
+      <div class="portal-card" onclick="openModal('hr')">
+        <div class="icon">👥</div>
+        <h3>HR Portal</h3>
+        <p>Employee management</p>
+      </div>
+      <div class="portal-card" onclick="openModal('applicant')">
+        <div class="icon">📝</div>
+        <h3>Apply Online</h3>
+        <p>New admissions</p>
+      </div>
+      <div class="portal-card" onclick="openModal('faculty')">
+        <div class="icon">👨‍🏫</div>
+        <h3>Faculty Portal</h3>
+        <p>Classes, grades</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-bg" id="modalBg" onclick="closeOnBg(event)">
+    <div class="modal">
+      <h2>Welcome Back 👋</h2>
+      <p>Login or create a new account</p>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('login')">Login</div>
+        <div class="tab" onclick="switchTab('register')">Register</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <input type="email" placeholder="Email address" />
+        <input type="password" placeholder="Password" />
+        <select>
+          <option value="">Select Role</option>
+          <option>Student</option>
+          <option>Admin</option>
+          <option>HR</option>
+          <option>Faculty</option>
+          <option>Applicant</option>
+        </select>
+        <button onclick="fakeLogin()">Login →</button>
+        <button class="close" onclick="closeModal()">Cancel</button>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" style="display:none">
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email address" />
+        <input type="password" placeholder="Password (min 8 chars)" />
+        <input type="tel" placeholder="Phone number" />
+        <select>
+          <option value="">Register as</option>
+          <option>Student / Applicant</option>
+          <option>Faculty</option>
+        </select>
+        <button onclick="fakeRegister()">Create Account →</button>
+        <button class="close" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2024 <span>Univera University</span> · Built with Docker + Node.js + PostgreSQL</p>
+    <p style="margin-top:8px">DevOps Pipeline: Docker → K8s → AWS EKS · Monitored by Prometheus + Grafana</p>
+  </footer>
+
+  <script>
+    function openModal(role) {
+      document.getElementById('modalBg').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('modalBg').classList.remove('active');
+    }
+    function closeOnBg(e) {
+      if (e.target.id === 'modalBg') closeModal();
+    }
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+    }
+    function fakeLogin() {
+      alert('✅ Backend connected झाल्यावर हे काम करेल!\nआत्ता API integration बाकी आहे.');
+    }
+    function fakeRegister() {
+      alert('✅ Registration form ready!\nBackend API connect केल्यावर data save होईल.');
+    }
+  </script>
+
+</body>
+</html>
