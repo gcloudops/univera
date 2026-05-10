@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-html
+  namespace: univera
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Univera University</title>
+      <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',sans-serif;background:#0f172a;color:white}
+        nav{background:#1e293b;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #6366f1}
+        .logo{font-size:24px;font-weight:bold;color:#6366f1}
+        .hero{text-align:center;padding:100px 20px}
+        .hero h1{font-size:48px;font-weight:800;margin-bottom:16px}
+        .hero h1 span{color:#6366f1}
+        .hero p{font-size:18px;color:#94a3b8;margin-bottom:40px}
+        .btn{display:inline-block;background:#6366f1;color:white;padding:14px 32px;border-radius:10px;font-size:16px;text-decoration:none;margin:0 8px}
+        .stats{display:flex;justify-content:center;gap:60px;padding:60px;background:#1e293b}
+        .stat h2{font-size:36px;color:#6366f1}
+        .stat p{color:#94a3b8}
+        .badge{background:#6366f1;color:white;padding:4px 12px;border-radius:20px;font-size:12px;margin-left:8px}
+      </style>
+    </head>
+    <body>
+      <nav>
+        <div class="logo">🎓 Univera University</div>
+        <div>
+          <span class="badge">K8s Pod</span>
+          <span class="badge">Running on Minikube</span>
+        </div>
+      </nav>
+      <section class="hero">
+        <h1>Welcome to <span>Univera</span></h1>
+        <p>Production-grade University System running on Kubernetes</p>
+        <a href="#" class="btn">Apply Now</a>
+        <a href="http://univera.local/api/health" class="btn" style="background:#10b981">API Health ✓</a>
+      </section>
+      <section class="stats">
+        <div class="stat"><h2>2</h2><p>Backend Pods (HPA)</p></div>
+        <div class="stat"><h2>K8s</h2><p>Orchestration</p></div>
+        <div class="stat"><h2>PVC</h2><p>Persistent Storage</p></div>
+        <div class="stat"><h2>DNS</h2><p>univera.local</p></div>
+      </section>
+    </body>
+    </html>
