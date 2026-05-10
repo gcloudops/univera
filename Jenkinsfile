@@ -1,26 +1,17 @@
 pipeline {
     agent any
-    environment {
-        IMAGE_NAME = "univera/backend"
-        NAMESPACE = "univera"
-    }
     stages {
         stage("Checkout") {
             steps {
-                echo "Code GitHub varon gheto..."
+                echo "Code checkout done"
                 checkout scm
-            }
-        }
-        stage("Docker Build") {
-            steps {
-                echo "Docker image build kartो..."
-                sh "docker build -t univera/backend:latest ./backend"
             }
         }
         stage("Deploy to K8s") {
             steps {
-                echo "Kubernetes madhe deploy kartो..."
+                echo "Deploying to Kubernetes..."
                 sh "kubectl rollout restart deployment/backend -n univera"
+                sh "kubectl rollout status deployment/backend -n univera --timeout=120s"
             }
         }
         stage("Health Check") {
