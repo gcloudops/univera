@@ -16,7 +16,7 @@ spec:
       serviceAccountName: jenkins
       securityContext:
         fsGroup: 1000
-        runAsUser: 1000
+        runAsUser: 0
       containers:
         - name: jenkins
           image: jenkins/jenkins:lts-jdk17
@@ -26,6 +26,10 @@ spec:
           volumeMounts:
             - name: jenkins-storage
               mountPath: /var/jenkins_home
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: kubectl-bin
+              mountPath: /usr/local/bin/kubectl
           resources:
             requests:
               memory: 512Mi
@@ -37,6 +41,12 @@ spec:
         - name: jenkins-storage
           persistentVolumeClaim:
             claimName: jenkins-pvc
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: kubectl-bin
+          hostPath:
+            path: /usr/local/bin/kubectl
 ---
 apiVersion: v1
 kind: Service
